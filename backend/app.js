@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors')
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -19,6 +21,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var whitelist = [
+  'http://localhost:3000',
+  'http://localhost:8080'
+]
+let corsOptionsDelegate = function (req, callback) {
+  var corsOptions
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+      corsOptions = {
+          origin: true,
+      } // reflect (enable) the requested origin in the CORS response
+  } else {
+      corsOptions = {
+          origin: false,
+      } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
+app.use(cors(corsOptionsDelegate))
+app.options('*', cors())
+ 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
