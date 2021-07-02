@@ -1,7 +1,6 @@
 <template>
   <div class="m-3 b-3">
-    <!-- <h1>MongoDB Exporter</h1> -->
-    <b-form class="py-2" @submit="onSubmit">
+    <b-form class="py-2" >
       <b-form-group
         id="input-group-1"
         label="MongoDB Connection URL"
@@ -84,9 +83,23 @@
         Error: {{ errorMessage }}
       </b-alert>
     </div>
-    <div class="well well-lg">
-      <vue-json-pretty :data="response"> </vue-json-pretty>
-      <!-- {{ response }} -->
+    <hr/>
+    <div class="container-fluid" v-if="response">
+      <div class="row">
+        <div class="mt-0 col-md-8 col-sm-12">
+          <label style="font-size:30px;">Results</label>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <b-button @click.prevent="onExport" variant="success"
+            >Export CSV</b-button
+          >
+        </div>
+      </div>
+      <div class="row">
+        <div class="well well-lg">
+          <vue-json-pretty :data="response"> </vue-json-pretty>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -110,13 +123,38 @@ export default {
         collection: "posts",
         mode: "aggregate",
       },
-      query: "",
+      query: '[{"$match":{"timeOfDay":"evening"}}]',
       response: {},
       errorMessage: null,
       showErrorMessage: false,
     };
   },
   methods: {
+    onExport() {
+      let _this = this;
+      console.log("Exporting the data");
+      if (!this.validateJSON(this.query)) {
+        return;
+      }
+      // this.query = this.prettifyJSON(this.query);
+      this.form.query = this.query;
+
+      APIs.exportAggregateQuery(this.form)
+        .then((response) => {
+         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+     var fileLink = document.createElement('a');
+
+     fileLink.href = fileURL;
+     fileLink.setAttribute('download', 'file.csv');
+     document.body.appendChild(fileLink);
+
+     fileLink.click();
+        })
+        .catch((error) => {
+          _this.showError(error);
+          console.error("Error while posting ", error);
+        });
+    },
     showError(message) {
       if (message) {
         this.showErrorMessage = true;
