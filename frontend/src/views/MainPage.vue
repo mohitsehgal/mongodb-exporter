@@ -118,12 +118,12 @@ export default {
   data() {
     return {
       form: {
-        dbName: "maajikibhente",
-        connectionString: "mongodb://localhost/maajikibhente",
-        collection: "posts",
+        dbName: "",
+        connectionString: "",
+        collection: "",
         mode: "aggregate",
       },
-      query: '[{"$match":{"timeOfDay":"evening"}}]',
+      query: '[{"$match":{}]',
       response: {},
       errorMessage: null,
       showErrorMessage: false,
