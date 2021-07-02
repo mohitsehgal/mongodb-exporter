@@ -9,5 +9,6 @@ router.get('/', function(req, res, next) {
 
 // router.post('/execute-mongo-query',MainController.executeMongoShell);
 router.post('/execute-mongo-query',MainController.executeMongoQuery);
+router.post('/export-mongo-query',MainController.exportMongoQuery);
 
 module.exports = router;
