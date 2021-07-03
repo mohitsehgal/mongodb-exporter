@@ -10,7 +10,7 @@
       crossorigin="anonymous"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--     
+    <!--     
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -28,53 +28,88 @@
     ></script>
 
     <script>
-         $(document).ready(function() {
-             console.log('loaded');
+      $(document).ready(function () {
+        console.log("loaded");
 
-            const showError = function(message){
-                if(message){
-                    $('#alertBox').show();
-                    $('#alertMessage').html(message);
-                }else{
+        const showError = function (message) {
+          if (message) {
+            $("#alertBox").show();
+            $("#alertMessage").html(message);
+          } else {
+            $("#alertBox").hide();
+            $("#alertMessage").html("");
+          }
+        };
 
-                    $('#alertBox').hide();
-                    $('#alertMessage').html('');
-                }
+        $("#executeButton").click(function (e) {
+          e.preventDefault();
+          let connectionURL = $("#connectionURL").val();
+          let dbName = $("#dbName").val();
+          let collectionName = $("#collectionName").val();
+          let query = $("#query").val();
+
+          const request = {
+            connectionString: connectionURL,
+            dbName: dbName,
+            collection: collectionName,
+            mode: "aggregate",
+            query: query,
+          };
+
+          console.log("Execute Click ", request);
+
+          $.post(
+            "http://localhost:3000/execute-mongo-query",
+            request,
+            function (data, status) {
+              console.log("data ", data);
+              if (data && data.result) {
+                $("#results").html(
+                  `<code>${JSON.stringify(data.result, null, "\t")}</code>`
+                );
+                showError(undefined);
+              } else {
+                showError(data.message || "Error Occurred");
+              }
+              console.log("status ", status);
             }
-
-            $("#executeButton").click(function(e){
-                e.preventDefault();
-                let connectionURL = $("#connectionURL").val();
-                let dbName = $("#dbName").val();
-                let collectionName = $("#collectionName").val();
-                let query = $("#query").val();
-
-                const request = {
-                    connectionString:connectionURL,
-                    dbName:dbName,
-                    collection:collectionName,
-                    mode:'aggregate',
-                    query:query
-                };
-
-                console.log('Execute Click ',request )
-              
-                $.post('http://localhost:3000/execute-mongo-query',request,function(data,status){
-                    console.log('data ',data);
-                    if(data && data.result){
-                        $('#results').html(`<code>${JSON.stringify(data.result,null,"\t")}</code>`);
-                        showError(undefined);
-                    }else{
-                        showError(data.message || 'Error Occurred');
-                    }
-                    console.log('status ',status);
-                });
-            });
-            $("#exportButton").click(function(e){
-                e.preventDefault();
-                console.log('Export Click')
-            });
+          );
         });
+        $("#exportButton").click(function (e) {
+          e.preventDefault();
+          let connectionURL = $("#connectionURL").val();
+          let dbName = $("#dbName").val();
+          let collectionName = $("#collectionName").val();
+          let query = $("#query").val();
+
+          const request = {
+            connectionString: connectionURL,
+            dbName: dbName,
+            collection: collectionName,
+            mode: "aggregate",
+            query: query,
+          };
+
+          console.log("Export Click ", request);
+
+          $.post(
+            "http://localhost:3000/export-mongo-query",
+            request,
+            function (data, status) {
+              console.log("data ", data);
+              var fileURL = window.URL.createObjectURL(new Blob([data]));
+              var fileLink = document.createElement("a");
+
+              fileLink.href = fileURL;
+              fileLink.setAttribute("download", "file.csv");
+              document.body.appendChild(fileLink);
+
+              fileLink.click();
+              console.log("status ", status);
+            }
+          );
+        });
+      });
     </script>
     <style>
       body {
@@ -135,32 +170,45 @@
               >
             </div>
             <div class="row">
-
-            <button type="submit" id="executeButton" class="text-center btn btn-primary m-2">
+              <button
+                type="submit"
+                id="executeButton"
+                class="text-center btn btn-primary m-2"
+              >
                 Execute Query
               </button>
-            
-              <button type="submit" id="exportButton" class="text-center btn btn-success m-2">
+
+              <button
+                type="submit"
+                id="exportButton"
+                class="text-center btn btn-success m-2"
+              >
                 Export
               </button>
-                
             </div>
           </form>
         </div>
-        <div class="well m-3 b-2 " id="resultsWrapper">
-            <div class="row"><h3>Results</h3></div>
-            <pre class="m-0 b-1" id="results">
-
-            </pre>
+        <div class="well m-3 b-2" id="resultsWrapper">
+          <div class="row"><h3>Results</h3></div>
+          <pre class="m-0 b-1" id="results"></pre>
         </div>
-      
-        <div id="alertBox" style="display: none;" class="alert alert-danger alert-dismissible fade show" role="alert">
-            <div id="alertMessage"></div>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        
+
+        <div
+          id="alertBox"
+          style="display: none"
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <div id="alertMessage"></div>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
       </div>
     </div>
   </body>
