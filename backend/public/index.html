@@ -62,7 +62,7 @@
                 $.post('http://localhost:3000/execute-mongo-query',request,function(data,status){
                     console.log('data ',data);
                     if(data && data.result){
-                        $('#results').html(JSON.stringify(data.result,null,2));
+                        $('#results').html(`<code>${JSON.stringify(data.result,null,"\t")}</code>`);
                         showError(undefined);
                     }else{
                         showError(data.message || 'Error Occurred');
@@ -147,9 +147,13 @@
             </div>
           </form>
         </div>
-        <div class="m-0 b-1" id="results">
+        <div class="well m-3 b-2 " id="resultsWrapper">
+            <div class="row"><h3>Results</h3></div>
+            <pre class="m-0 b-1" id="results">
 
+            </pre>
         </div>
+      
         <div id="alertBox" style="display: none;" class="alert alert-danger alert-dismissible fade show" role="alert">
             <div id="alertMessage"></div>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
