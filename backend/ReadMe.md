@@ -15,3 +15,6 @@
  4. Fill `Aggregate Query` in the textarea, it should be a valid JSON Object.
  5. Click on Execute button to see the results (preview).
  6. If data looks okay, then click on Export button. It would be exported in CSV format
+
+ # Contact
+ If you are facing any issues or have change request. Kindly write me at appsyoda@gmail.com.
