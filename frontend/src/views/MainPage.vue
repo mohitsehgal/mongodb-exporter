@@ -12,7 +12,7 @@
           id="input-1"
           v-model="form.connectionString"
           type="text"
-          placeholder="e.g mongodb://localhost/"
+          placeholder="Paste your connection string (SRV or Standard ) e.g. mongodb://localhost"
           required
         ></b-form-input>
       </b-form-group>
