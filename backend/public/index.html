@@ -9,11 +9,13 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--     
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"
-    ></script>
+    ></script> -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -25,6 +27,37 @@
       crossorigin="anonymous"
     ></script>
 
+    <script>
+         $(document).ready(function() {
+             console.log('loaded');
+            $("#executeButton").click(function(e){
+                e.preventDefault();
+                let connectionURL = $("#connectionURL").val();
+                let dbName = $("#dbName").val();
+                let collectionName = $("#collectionName").val();
+                let query = $("#query").val();
+
+                const request = {
+                    connectionString:connectionURL,
+                    dbName:dbName,
+                    collection:collectionName,
+                    mode:'aggregate',
+                    query:query
+                };
+
+                console.log('Execute Click ',request )
+              
+                $.post('http://localhost:3000/execute-mongo-query',request,function(data,status){
+                    console.log('data ',data);
+                    console.log('status ',status);
+                });
+            });
+            $("#exportButton").click(function(e){
+                e.preventDefault();
+                console.log('Export Click')
+            });
+        });
+    </script>
     <style>
       body {
         padding-top: 50px;
@@ -35,7 +68,7 @@
   <body>
     <div class="container-fluid">
       <div id="app">
-        <div class="m-0 b-1">
+        <div class="m-0 b-1" id="form">
           <form>
             <div class="form-group">
               <label for="mongoURL">MongoDB Connection URL</label>
@@ -76,18 +109,30 @@
                 rows="6"
                 type="textarea"
                 class="form-control"
-                id="dbName"
+                id="query"
                 placeholder='[{\"$match\":{}}]'
               ></textarea>
               <small id="connectionURLHelp" class="form-text text-muted"
                 >It should be a valid JSON Array</small
               >
             </div>
-            <button type="submit" class="text-center btn btn-primary">
-              Execute Query
-            </button>
+            <div class="row">
+
+            <button type="submit" id="executeButton" class="text-center btn btn-primary m-2">
+                Execute Query
+              </button>
+            
+              <a type="submit" id="exportButton" class="text-center btn btn-success m-2">
+                Export
+              </button>
+                
+            </div>
           </form>
         </div>
+        <div class="m-0 b-1" id="results">
+
+        </div>
+        
       </div>
     </div>
   </body>
