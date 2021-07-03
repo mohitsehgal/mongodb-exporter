@@ -1,20 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Sample Site</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <style>
-    body { padding-top: 50px; }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MongoDB Exporter</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
 
-  <div class="container">
-    <div class="jumbotron">
-      <h1>res.sendFile() Works!</h1>
+    <style>
+      body {
+        padding-top: 50px;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div id="app">
+        <div class="m-0 b-1">
+          <form>
+            <div class="form-group">
+              <label for="mongoURL">MongoDB Connection URL</label>
+              <input
+                type="text"
+                class="form-control"
+                id="connectionURL"
+                aria-describedby="connectionURLHelp"
+                placeholder="Paste your connection string (SRV or Standard) e.g. mongodb://localhost/"
+              />
+              <small id="connectionURLHelp" class="form-text text-muted"
+                >Complete MongoDB Connection URL</small
+              >
+            </div>
+            <div class="form-group">
+              <label for="dbName">DB name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="dbName"
+                placeholder="DB Name e.g. mydb"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="collectionName">Collection Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="collectionName"
+                placeholder="Mongo Collection Name e.g. users"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="query">Aggregate Query (pipeline)</label>
+              <textarea
+                rows="6"
+                type="textarea"
+                class="form-control"
+                id="dbName"
+                placeholder='[{\"$match\":{}}]'
+              ></textarea>
+              <small id="connectionURLHelp" class="form-text text-muted"
+                >It should be a valid JSON Array</small
+              >
+            </div>
+            <button type="submit" class="text-center btn btn-primary">
+              Execute Query
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-
-</body>
+  </body>
 </html>
