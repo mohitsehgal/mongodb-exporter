@@ -3,8 +3,9 @@ var router = express.Router();
 
 const MainController = require('../controllers/index');
 /* GET home page. */
+const path = require('path');
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 // router.post('/execute-mongo-query',MainController.executeMongoShell);
