@@ -30,6 +30,18 @@
     <script>
          $(document).ready(function() {
              console.log('loaded');
+
+            const showError = function(message){
+                if(message){
+                    $('#alertBox').show();
+                    $('#alertMessage').html(message);
+                }else{
+
+                    $('#alertBox').hide();
+                    $('#alertMessage').html('');
+                }
+            }
+
             $("#executeButton").click(function(e){
                 e.preventDefault();
                 let connectionURL = $("#connectionURL").val();
@@ -49,6 +61,12 @@
               
                 $.post('http://localhost:3000/execute-mongo-query',request,function(data,status){
                     console.log('data ',data);
+                    if(data && data.result){
+                        $('#results').html(JSON.stringify(data.result,null,2));
+                        showError(undefined);
+                    }else{
+                        showError(data.message || 'Error Occurred');
+                    }
                     console.log('status ',status);
                 });
             });
@@ -122,7 +140,7 @@
                 Execute Query
               </button>
             
-              <a type="submit" id="exportButton" class="text-center btn btn-success m-2">
+              <button type="submit" id="exportButton" class="text-center btn btn-success m-2">
                 Export
               </button>
                 
@@ -132,6 +150,12 @@
         <div class="m-0 b-1" id="results">
 
         </div>
+        <div id="alertBox" style="display: none;" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div id="alertMessage"></div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         
       </div>
     </div>
