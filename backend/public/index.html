@@ -97,8 +97,8 @@
             request,
             function (data, status) {
               console.log("data ", data);
-              var fileURL = window.URL.createObjectURL(new Blob([data]));
-              var fileLink = document.createElement("a");
+              let fileURL = window.URL.createObjectURL(new Blob([data]));
+              let fileLink = document.createElement("a");
 
               fileLink.href = fileURL;
               fileLink.setAttribute("download", "export_data.csv");
