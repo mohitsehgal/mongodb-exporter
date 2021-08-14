@@ -3,10 +3,11 @@
  2. NPM 6.4.11 or greater
 
 # Setup
- 1. Download the files and open terminal at folder.
- 2. Run `npm install`
- 3. Run `npm run start`
- 4. Open Browser url `http://localhost:3000`
+ 1. Clone the repository.
+ 2. Open terminal in project directory.
+ 3. Run `npm install`
+ 4. Run `npm run start`
+ 5. Open Browser url `http://localhost:3000`
 
 # Instructions
  1. Fill MongoDB Connection URL
