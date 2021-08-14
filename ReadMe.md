@@ -16,5 +16,9 @@
  5. Click on Execute button to see the results (preview).
  6. If data looks okay, then click on Export button. It would be exported in CSV format
 
+Sample Screenshot
+![image](https://user-images.githubusercontent.com/1757104/129435891-14a590f8-5ca8-474b-827f-3802e2f75d70.png)
+
+
  # Contact
  If you are facing any issues or have change request. Kindly write me at appsyoda@gmail.com.
