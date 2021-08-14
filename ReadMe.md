@@ -1,3 +1,7 @@
+# MongoDB Exporter
+Simple web tool to export data from Any MongoDB Database into CSV format directly using Aggregate Pipeline. It essentially runs the query on Node/Express Server and returns it to simple HTML Page. It provides convenient way to Export the data in just one click. 
+ No need to code adhoc APIs / Scripts just for exporting the report data. If you have any suggestions or feature request please reach me out at appsyoda@gmail.com
+
 # Pre-requisites 
  1. Node.JS 12 or greater
  2. NPM 6.4.11 or greater
