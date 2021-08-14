@@ -3,10 +3,11 @@
  2. NPM 6.4.11 or greater
 
 # Setup
- 1. Download the files and open terminal at folder.
- 2. Run `npm install`
- 3. Run `npm run start`
- 4. Open Browser url `http://localhost:3000`
+ 1. Clone the repository.
+ 2. Open terminal in project directory.
+ 3. Run `npm install`
+ 4. Run `npm run start`
+ 5. Open Browser url `http://localhost:3000`
 
 # Instructions
  1. Fill MongoDB Connection URL
@@ -15,6 +16,10 @@
  4. Fill `Aggregate Query` in the textarea, it should be a valid JSON Object.
  5. Click on Execute button to see the results (preview).
  6. If data looks okay, then click on Export button. It would be exported in CSV format
+
+Sample Screenshot
+![image](https://user-images.githubusercontent.com/1757104/129435891-14a590f8-5ca8-474b-827f-3802e2f75d70.png)
+
 
  # Contact
  If you are facing any issues or have change request. Kindly write me at appsyoda@gmail.com.
